@@ -11,7 +11,8 @@ test('can receive a new user and show it on a list', () => {
   const emailInput = screen.getByRole('textbox', {
     name: /email/i
   })
-  const button = screen.getByRole('button')
+  // const button = screen.getByRole('button')
+  const button = screen.getByText(/add user/i)
 
   user.click(nameInput);
   user.keyboard('jane');

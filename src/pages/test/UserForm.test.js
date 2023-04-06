@@ -1,6 +1,6 @@
 import {render, screen} from "@testing-library/react";
 import user from '@testing-library/user-event'
-import UserForm from "./UserForm";
+import UserForm from "../UserForm";
 
 test('it show two inputs and a button', async () => {
     // render the component

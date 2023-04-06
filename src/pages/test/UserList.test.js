@@ -1,5 +1,5 @@
 import {getByRole, render, screen, within} from "@testing-library/react";
-import UserList from "./UserList";
+import UserList from "../UserList";
 function renderComponent() {
     const users = [
         {name: 'Inna', email: 'inna@inna.com'},
