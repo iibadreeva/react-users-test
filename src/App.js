@@ -1,7 +1,11 @@
 import {useState} from "react";
+import Container from "react-bootstrap/Container";
 import UserForm from "./pages/UserForm";
 import UserList from "./pages/UserList";
 import SummaryForm from "./pages/SummaryForm";
+import OrderEntry from "./pages/entry/OrderEntry";
+import {OrderDetailsProvider, useOrderDetails} from "./contexts/OrderDetails";
+
 import style from './App.module.css'
 function App() {
   const [users, setUsers] = useState([
@@ -13,15 +17,19 @@ function App() {
   }
 
   return (
-      <div>
+      <Container>
           <SummaryForm />
+          <OrderDetailsProvider>
+              <OrderEntry />
+          </OrderDetailsProvider>
+
         <div className={style.app}>
             <h2>learn react</h2>
             <UserForm onUserAdd={onUserAdd} />
             <hr/>
             <UserList users={users} />
         </div>
-      </div>
+      </Container>
   );
 }
 
