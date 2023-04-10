@@ -1,16 +1,35 @@
 import {useState} from "react";
 import Container from "react-bootstrap/Container";
+
 import UserForm from "./pages/UserForm";
 import UserList from "./pages/UserList";
-import SummaryForm from "./pages/SummaryForm";
+import SummaryForm from "./pages/summary/SummaryForm";
 import OrderEntry from "./pages/entry/OrderEntry";
-import {OrderDetailsProvider, useOrderDetails} from "./contexts/OrderDetails";
+import OrderConfirmation from "./pages/confirmation/orderConfirmation";
+import OrderSummary from "./pages/summary/OrderSummary";
+
+import {OrderDetailsProvider} from "./contexts/OrderDetails";
 
 import style from './App.module.css'
 function App() {
   const [users, setUsers] = useState([
       {name: 'Inna', email: 'inna@inna.com'}
   ])
+    const [orderPhase, setOrderPhase] = useState('inProgress')
+
+    let Component = OrderEntry
+    switch (orderPhase){
+        case 'inProgress':
+            Component = OrderEntry
+            break;
+        case 'review':
+            Component = OrderSummary
+            break
+        case 'completed':
+            Component = OrderConfirmation
+            break
+        default:
+    }
 
   const onUserAdd = (user) => {
     setUsers([...users, user])
@@ -20,7 +39,8 @@ function App() {
       <Container>
           <SummaryForm />
           <OrderDetailsProvider>
-              <OrderEntry />
+              {/*<OrderEntry />*/}
+              <Component setOrderPhase={setOrderPhase} />
           </OrderDetailsProvider>
 
         <div className={style.app}>

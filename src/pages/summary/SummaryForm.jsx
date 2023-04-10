@@ -9,7 +9,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 //         <Button variant="success">Click me to see</Button>
 //     </OverlayTrigger>
 // );
-function SummaryForm() {
+function SummaryForm({setOrderPhase}) {
     const [tcChecked, setTcChecked] = useState(false)
 
     const popover = (
@@ -25,8 +25,12 @@ function SummaryForm() {
             <span style={{color: 'blue'}}>Terms and Conditions</span>
         </OverlayTrigger>
     </span>)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        setOrderPhase('completed')
+    }
 
-    return (<Form>
+    return (<Form onSubmit={handleSubmit}>
         <Form.Group controlId="terms-and-conditions">
             <Form.Check
                 type="checkbox"

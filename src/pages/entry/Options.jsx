@@ -3,9 +3,10 @@ import {useEffect, useState} from "react";
 import Row from 'react-bootstrap/Row'
 import ScoopOption from "./ScoopOptions";
 import ToppingOption from './ToppingOption'
-import AlertBanner from "./common/AllertBanner";
+import AlertBanner from "../common/AllertBanner";
 import {pricePerItem} from "../../constants";
 import {useOrderDetails} from "../../contexts/OrderDetails";
+import {formatCurrency} from "../../utilities";
 
 export default function Options({optionType}){
     const [items, setItems] = useState([])
@@ -28,7 +29,7 @@ export default function Options({optionType}){
     const optionItems = items.map((it) => (
         <>
             <h2>{title}</h2>
-            <p>{pricePerItem[optionType]} each</p>
+            <p>{formatCurrency(pricePerItem[optionType])} each</p>
             <p>{title} total: {orderDetails.totals[optionType]}</p>
             <Row>
                 <ItemComponent

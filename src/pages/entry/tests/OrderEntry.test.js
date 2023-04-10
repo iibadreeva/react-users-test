@@ -2,6 +2,7 @@ import {render, screen, waitFor} from "../../../test-utils/testing-libary-utils"
 import {rest} from 'msw'
 import OrderEntry from "../OrderEntry";
 import {server} from '../../../mocks/server'
+import userEvent from "@testing-library/user-event";
 
 test.skip('handles error for scoops toppings routes', async () => {
     server.resetHandlers(
@@ -13,7 +14,7 @@ test.skip('handles error for scoops toppings routes', async () => {
         )
     );
 
-    render(<OrderEntry />)
+    render(<OrderEntry setOrderPhase={jest.fn()} />)
 
     await waitFor(async () => {
         const alerts = await screen.findAllByRole('alert')
@@ -21,4 +22,18 @@ test.skip('handles error for scoops toppings routes', async () => {
     })
 })
 
-test('nota real test', () => {})
+test('disable order button if there are no scoops ordered', async () => {
+    render(<OrderEntry setOrderPhase={jest.fn()} />)
+
+    // order button should be disabled at first, even before options load
+    let orderButton = screen.getByRole('button', {name: /order sunday/i})
+    expect(orderButton).toBeDisabled()
+
+    // expect to be enabled after adding scoop
+    const vanillaInput = await screen.findByRole('spinbutton', {
+        name: 'Vanilla'
+    })
+    userEvent.clear(vanillaInput)
+    userEvent.type(vanillaInput, '0')
+    expect(orderButton).toBeDisabled()
+})
